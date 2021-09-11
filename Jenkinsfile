@@ -1,16 +1,22 @@
 pipeline {
     agent any
     stages {
+
         stage("build") {
             steps {
                 echo 'Building the application'
-                echo 'This should trigger jenkins polling'
+                nodejs("NodeJS-16.9.1") {
+                    sh 'npm install'
+                }
             }
         }
 
         stage("test") {
             steps {
                 echo 'Testing the application'
+                nodejs("NodeJS-16.9.1") {
+                    sh 'npm run test'
+                }
             }
         }
 
