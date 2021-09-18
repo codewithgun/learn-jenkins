@@ -2,8 +2,8 @@ import { AnimalType } from '../entities/animal-type.entity';
 import { animalTypeStub } from '../test/stubs/animal-types.stub';
 
 export class AnimalTypeRepository {
-	findOne(param): AnimalType | undefined {
-		return param.where.id ? animalTypeStub() : undefined;
+	findOne(id): AnimalType | undefined {
+		return id ? animalTypeStub() : undefined;
 	}
 	find(): AnimalType[] {
 		return [animalTypeStub()];

@@ -1,4 +1,16 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAnimalDto } from './create-animal.dto';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNumber, IsString } from 'class-validator';
 
-export class UpdateAnimalDto extends PartialType(CreateAnimalDto) {}
+export class UpdateAnimalDto {
+	@ApiPropertyOptional()
+	@IsString()
+	name?: string;
+
+	@ApiPropertyOptional()
+	@IsString()
+	description?: string;
+
+	@ApiPropertyOptional()
+	@IsNumber()
+	animalTypeId?: number;
+}

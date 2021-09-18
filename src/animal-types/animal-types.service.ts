@@ -36,16 +36,16 @@ export class AnimalTypesService extends IAnimalTypesService {
 		);
 	}
 
+	/**
+	 * Get all animal types
+	 * @returns An array of animal type
+	 */
 	async findAll(): Promise<AnimalType[]> {
 		return await this.animalTypeRepository.find();
 	}
 
 	async findOne(id: number): Promise<AnimalType | undefined> {
-		return await this.animalTypeRepository.findOne({
-			where: {
-				id,
-			},
-		});
+		return await this.animalTypeRepository.findOne(id);
 	}
 
 	async update(id: number, updateAnimalTypeDto: UpdateAnimalTypeDto): Promise<AnimalType | undefined> {
