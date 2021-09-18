@@ -5,6 +5,7 @@
 
 ## Tasks
 
+- [ ] e2e testing
 - [ ] Testing with different schema of real-database (https://stackoverflow.com/questions/55717089/test-nestjs-service-against-actual-database)
 
 ### Reference

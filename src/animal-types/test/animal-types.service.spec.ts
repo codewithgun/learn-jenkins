@@ -59,7 +59,7 @@ describe('AnimalTypesService', () => {
 
 		describe('when find animal type with non-exist id', () => {
 			it('it should not return any animal type', async () => {
-				let result = await service.findOne(undefined);
+				let result = await service.findOne(Math.max());
 				expect(result).toBeUndefined();
 			});
 		});
@@ -80,7 +80,7 @@ describe('AnimalTypesService', () => {
 
 		describe('when update an non-exist animal type', () => {
 			it('it should return undefined', async () => {
-				let updatedAnimalType = await service.update(undefined, updateAnimalTypeDto);
+				let updatedAnimalType = await service.update(Math.max(), updateAnimalTypeDto);
 				expect(updatedAnimalType).toBeUndefined();
 			});
 		});

@@ -11,4 +11,8 @@ export class CreateAnimalDto {
 	@Min(0)
 	@IsNumber()
 	animalTypeId: number;
+
+	@ApiProperty()
+	@IsString()
+	description: string;
 }

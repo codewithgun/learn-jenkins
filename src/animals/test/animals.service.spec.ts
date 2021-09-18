@@ -4,6 +4,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { AnimalType } from 'src/animal-types/entities/animal-type.entity';
 import { animalTypeStub } from 'src/animal-types/test/stubs/animal-types.stub';
 import { AnimalTypeRepository } from 'src/animal-types/__mocks__/animal-types.repository';
+import { EntityNotFoundError } from 'typeorm';
 import { UpdateAnimalDto } from '../dto/update-animal.dto';
 import { AnimalsService } from './../animals.service';
 import { CreateAnimalDto } from './../dto/create-animal.dto';
@@ -38,6 +39,7 @@ describe('AnimalsService', () => {
 				let createAnimalDto: CreateAnimalDto = {
 					animalTypeId: animalTypeStub().id,
 					name: animalStub().name,
+					description: animalStub().description,
 				};
 				let animal = await service.create(createAnimalDto);
 				expect(animal).not.toBeUndefined();
@@ -50,6 +52,7 @@ describe('AnimalsService', () => {
 				let createAnimalDto: CreateAnimalDto = {
 					animalTypeId: undefined,
 					name: animalStub().name,
+					description: animalStub().description,
 				};
 				await expect(service.create(createAnimalDto)).rejects.toThrowError(BadRequestException);
 			});
@@ -77,7 +80,7 @@ describe('AnimalsService', () => {
 
 		describe('when find animal with non-exist id', () => {
 			it('it should return undefined', async () => {
-				let animal = await service.findOne(undefined);
+				let animal = await service.findOne(Math.max());
 				expect(animal).toBeUndefined();
 			});
 		});
@@ -99,8 +102,15 @@ describe('AnimalsService', () => {
 
 		describe('when update an animal with non-exist id', () => {
 			it('it should return undefined', async () => {
-				let updatedAnimal = await service.update(undefined, updateAnimalDto);
+				let updatedAnimal = await service.update(Math.max(), updateAnimalDto);
 				expect(updatedAnimal).toBeUndefined();
+			});
+		});
+
+		describe('when update an animal with non-exist animal type id', () => {
+			it('it should throw EntityNotFoundError', async () => {
+				updateAnimalDto.animalTypeId = Math.max();
+				await expect(service.update(animalStub().id, updateAnimalDto)).rejects.toThrowError(EntityNotFoundError);
 			});
 		});
 	});

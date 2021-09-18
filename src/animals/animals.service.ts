@@ -34,9 +34,20 @@ export class AnimalsService extends IAnimalService {
 		return this.animalRepository.findOne(id);
 	}
 
+	/**
+	 *
+	 * @param id
+	 * @param updateAnimalDto
+	 * @returns updated animal
+	 * @throws {@link EntityNotFoundError}
+	 */
 	async update(id: number, updateAnimalDto: UpdateAnimalDto): Promise<Animal | undefined> {
+		const { animalTypeId } = updateAnimalDto;
 		let animal = await this.animalRepository.findOne(id);
 		if (animal) {
+			if (animalTypeId !== undefined) {
+				await this.animalTypeRepository.findOneOrFail(animalTypeId);
+			}
 			await this.animalRepository.update(id, updateAnimalDto);
 			return {
 				...animal,
