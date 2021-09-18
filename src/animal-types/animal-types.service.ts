@@ -21,6 +21,14 @@ export class AnimalTypesService extends IAnimalTypesService {
 	 * @returns Newly created animal type
 	 */
 	async create(createAnimalTypeDto: CreateAnimalTypeDto): Promise<AnimalType> {
+		let animalType = await this.animalTypeRepository.findOne({
+			where: {
+				name: createAnimalTypeDto.name,
+			},
+		});
+		if (animalType) {
+			return animalType;
+		}
 		return await this.animalTypeRepository.save(
 			this.animalTypeRepository.create({
 				...createAnimalTypeDto,
@@ -43,9 +51,11 @@ export class AnimalTypesService extends IAnimalTypesService {
 	async update(id: number, updateAnimalTypeDto: UpdateAnimalTypeDto): Promise<AnimalType | undefined> {
 		let existingAnimalType = await this.findOne(id);
 		if (existingAnimalType) {
-			return this.update(id, {
+			await this.animalTypeRepository.update(id, updateAnimalTypeDto);
+			return {
+				...existingAnimalType,
 				...updateAnimalTypeDto,
-			});
+			};
 		}
 	}
 

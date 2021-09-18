@@ -5,6 +5,9 @@ import { AnimalTypesService } from '../animal-types.service';
 import { UpdateAnimalTypeDto } from '../dto/update-animal-type.dto';
 import { animalTypeStub as animalTypesStub } from './stubs/animal-types.stub';
 
+// Looks like the mocked module need to have same path, and filename
+// But the mocked module, put inside __mocks__
+// https://stackoverflow.com/questions/55571012/manual-mocking-using-mocks-not-working
 jest.mock('../animal-types.service');
 
 describe('AnimalTypesController', () => {
@@ -52,7 +55,7 @@ describe('AnimalTypesController', () => {
 
 		describe('when findOne is called with invalid id', () => {
 			it('it should throw BadRequestException', async () => {
-				await expect(animalTypesController.findOne(-1)).rejects.toThrowError(BadRequestException);
+				await expect(animalTypesController.findOne(undefined)).rejects.toThrowError(BadRequestException);
 			});
 		});
 	});

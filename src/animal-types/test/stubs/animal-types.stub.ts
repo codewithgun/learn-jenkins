@@ -5,8 +5,8 @@ const createdAt = new Date();
 export const animalTypeStub = (): AnimalType => {
 	return {
 		id: 1,
-		name: 'Dog',
-		description: 'Cute dog',
+		name: 'Shiba Inu',
+		description: 'Angry yet cute',
 		animals: [],
 		createdAt,
 	};
